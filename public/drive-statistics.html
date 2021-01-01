@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Drive Statistics</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+    </head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <link rel="stylesheet" href="./style.css">
+        
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+
+    <body>
+        <h1 id="heading">Drive Statistics</h1>
+        <div id="container" style="margin-left: 10px;">
+            <div class="navbar" style="height: 5vh; position: relative;">
+                <a href="./drive-statistics.html">Drive Statistics</a>
+                <a href="./motor-health.html" style="left: 20vw;">Motor Health</a>
+                <a href="./battery-health.html" style="left: 40vw;">Battery Health</a>
+                <a href="./braking-statistics.html" style="left: 60vw;">Braking Statistics</a>
+                <a href="./overall-vehicle-performance.html" style="left: 80vw;">Overall Vehicle Performance</a>
+            </div>
+            <br> <br>
+            <div class="selections" style="height: 10vh;">
+                <div class="labels" style="height: 5vh;">
+                    <label for="interval">Select Interval</label>
+                    <label for="location" style="left: 20vw;">Select Location Range</label>
+                    <label for="speed"  style="left: 40vw;">Select Speed Range</label>
+                    <label for="accel"  style="left: 60vw;">Select Accel Range</label>
+                </div>
+                <br>
+                <form>
+                    <div class="inputs" style="height: 5vh;">
+                        <input id="interval" type="text">
+                        <input id="location"  style="left: 20vw;" type="text">
+                        <input id="speed"  style="left: 40vw;" type="text">
+                        <input id="accel"  style="left: 60vw;" type="text">
+                        <input type="submit" id="submit"  style="left: 80vw;">
+                    </div>
+                </form> 
+            </div>
+            <br>
+            <div style="position: relative; height: 50vh;">
+                <div id='map' style='width: 45vw; height: 40vh; position: absolute;'></div>
+                <div style="width: 45vw; height: 40vh; position: absolute; left: 50vw;"><canvas id="chart"></canvas></div>
+            </div>
+            <br>
+            <div class="results">
+                <div id="numbers" style="position: relative;">
+                    <h3>Total Energy Consumed: <span id="energy"></span></h3>
+                    <h3 style="position: absolute; left: 70vw;">Total Distance Travelled: <span id="distance"></span></h3>
+                </div>
+                <br>
+                <h2 style="text-align: center;">This was an <span id="drive">economic</span> drive</h2>
+            </div>
+        </div>
+    </body>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia2VzaGF2LTIwMTkiLCJhIjoiY2tqNnZiaHAyMTg4dTJxbnZwMXBqaGIwciJ9.SlyK56DwZ7RF6mYSD9t8mQ';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11'
+        });
+    </script>
+        <script>
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chart = new Chart(ctx, {
+    // The type of chart we want to create
+        type: 'line',
+
+    // The data for our dataset
+        data: {
+            labels: ['a', 'b', 'c', 'd', 'e'],
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 25, 0, 12],
+                fill: false
+            }]
+        }
+});
+    </script>
+</html>

@@ -1,0 +1,59 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#heading{
+    font-size: 3em;
+    text-align: center;
+    height: 10vh;
+}
+#type {
+    text-align: center;
+    height: 10vh;
+}
+#container{
+    height: 80vh;
+}
+.three{
+    display: inline-block;
+    height: 40vh;
+    width: 32vw;
+    text-align: center;
+    padding-top: 20vh;
+    font-size: 1.7rem;
+}
+.two{
+    display: inline;
+    height: 40vh;
+    width: 33vh;
+    text-align: center;
+    padding-top: 20vh;
+    position: absolute;
+    margin: 2px;
+    font-size: 1.7rem;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: blue;
+}
+.navbar a, .labels label{
+    position: absolute;
+    display: inline-block;
+    width: 15vw;
+    height: 5vh;
+    text-align: center;
+    border: 1px solid black;
+}
+.inputs input{
+    width: 15vw;
+    position: absolute;
+    height: 3vh;
+}
+#numbers h3{
+    display: inline;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Overall Vehicle Performance</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+    </head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <link rel="stylesheet" href="./style.css">
+        
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+
+    <body>
+        <h1 id="heading">Overall Vehicle Performance</h1>
+        <div id="container" style="margin-left: 10px;">
+            <div class="navbar" style="height: 5vh; position: relative;">
+                <a href="./drive-statistics.html">Drive Statistics</a>
+                <a href="./motor-health.html" style="left: 20vw;">Motor Health</a>
+                <a href="./braking-statistics.html" style="left: 40vw;">Battery Health</a>
+                <a href="./braking-statistics.html" style="left: 60vw;">Braking Statistics</a>
+                <a href="./overall-vehicle-performance.html" style="left: 80vw;">Overall Vehicle Performance</a>
+            </div>
+            <br> <br>
+            <div class="selections" style="height: 10vh;">
+                <div class="labels" style="height: 5vh;">
+                    <label for="interval">Select Interval</label>
+                    <label for="location" style="left: 20vw;">Select Location Range</label>
+                    <label for="speed"  style="left: 40vw;">Select Speed Range</label>
+                    <label for="accel"  style="left: 60vw;">Select Accel Range</label>
+                </div>
+                <br>
+                    <div class="inputs" style="height: 5vh;">
+                        <input name="interval" id="interval" type="text">
+                        <input name="minLocation" id="minLocation"  style="left: 20vw; width: 7.5vw;" type="text">
+                        <input name="maxLocation" id="maxLocation"  style="left: 30vw; width: 7.5vw;" type="text">
+                        <input name="speed" id="speed"  style="left: 40vw;" type="text">
+                        <input name="accel" id="accel"  style="left: 60vw;" type="text">
+                        <input type="submit" id="submit"  style="left: 80vw;">
+                    </div>
+            </div>
+            <br>
+            <div style="position: relative; height: 50vh;">
+                <div id='map' style='width: 45vw; height: 40vh; position: absolute;'></div>
+                <div style="width: 45vw; height: 40vh; position: absolute; left: 50vw;"><canvas id="chart"></canvas></div>
+            </div>
+            <br>
+            <div class="results">
+                <div id="numbers" style="position: relative;">
+                    <h3>Total Energy Consumed: <span id="energy"></span></h3>
+                    <h3 style="position: absolute; left: 70vw;">Total Distance Travelled: <span id="distance"></span></h3>
+                </div>
+                <br>
+                <h2 style="text-align: center;">This was an <span id="drive">economic</span> drive</h2>
+            </div>
+        </div>
+    </body>
+    <script defer src="./script.js"></script>
+</html>
