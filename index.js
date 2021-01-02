@@ -8,36 +8,26 @@ app.listen(3000, () => console.log('listening at 3000'))
 app.use(express.static('public'))
 app.use(express.json({ limit: '1mb' }))
 
-const con = mysql.createConnection({
+let con = mysql.createConnection({
   host: 'localhost',
-  username: 'root',
-  password: '778101'
+  user: 'root',
+  password: 'Keshav2019@',
+  database: 'testDB'
 })
 
 con.connect((err) => {
   if (err) {throw err}
   console.log('connected')
-  const sql = "CREATE DATABASE testDB"
+  /*const sql = "DROP TABLE customers"
   con.query(sql, (err, result) => {
     if(err) {throw err}
-    console.log("database created")
-  })
-})
-
-app.get('/api', (request, response) => {
-  database.find({}, (err, data) => {
-    if (err) {
-      response.end()
-      return
-    }
-    response.json(data)
-  })
+    console.log("table dropped")
+  })*/
 })
 
 app.post('/api', (request, response) => {
   const data = request.body
   const timestamp = Date.now()
   data.timestamp = timestamp
-  database.find({intervalRqst: data.intervalRqst})
   response.json(data)
 })
