@@ -8,16 +8,16 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia2VzaGF2LTIwMTkiLCJhIjoiY2tqNnZiaHAyMTg4dTJxb
         var popUp = new mapboxgl.Popup().setHTML("<p>VehicleID</p>")
 
         const ctx = document.getElementById('chart').getContext('2d');
-        const chart = new Chart(ctx, {
+        let chart = new Chart(ctx, {
         type: 'line',
 
         data: {
-            labels: ['a', 'b', 'c', 'd', 'e'],
+            labels: [],
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 25, 0, 12],
+                data: [],
                 fill: false
             }]
         }
@@ -37,14 +37,24 @@ submit.addEventListener('click', async (e) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            speedRqst: speedRange.value,
-            intervalRqst: interval.value,
-            accelRqst: accelRange.value   
+            speedRqst: speedRange.value.split(','),
+            intervalRqst: interval.value.split(','),
+            accelRqst: accelRange.value.split(','),
+            locationRqst: [minCoord.value.split(','), maxCoord.value.split(',')]   
         })
     }
     const response = await fetch('/api', options)
     const post = await response.json()
-    console.log(post) 
+    console.log(post)
+    const postArray = Array.from(post)
+    let plotData = []
+    postArray.forEach(post => {
+        chart.data.labels.push(post.accel_x)
+        plotData.push(post.accel_y)
+    })
+    chart.data.datasets.data = plotData
+    chart.update()
+    console.log(chart.data.datasets.data)
     let minCoords = minCoord.value.split(',')
     let maxCoords = maxCoord.value.split(',')
     let coords = [[parseFloat(minCoords[0]), parseFloat(minCoords[1])], [parseFloat(maxCoords[0]), parseFloat(maxCoords[1])]]

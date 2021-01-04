@@ -1,33 +1,38 @@
+const { request } = require('express')
 const express = require('express')
 const fetch = require('node-fetch')
-const mysql = require('mysql')
 require('dotenv')
+const {Client} = require('pg')
 
 const app = express()
 app.listen(3000, () => console.log('listening at 3000'))
 app.use(express.static('public'))
 app.use(express.json({ limit: '1mb' }))
 
-let con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
+const client = new Client({
+  user: 'postgres',
   password: 'Keshav2019@',
-  database: 'testDB'
+  port: '5432',
+  host: 'localhost',
+  database: 'mydb'
 })
 
-con.connect((err) => {
-  if (err) {throw err}
-  console.log('connected')
-  /*const sql = "DROP TABLE customers"
-  con.query(sql, (err, result) => {
-    if(err) {throw err}
-    console.log("table dropped")
-  })*/
-})
+async function execute() {
+  await client.connect()
+  await app.post('/api', (req, res) => {
+    const dataRqst = req.body
+    client.query("SELECT * FROM data1 WHERE accel_X < $1", [dataRqst.accelRqst[0]] , (err, result) => {
+      if (err) {err => console.log(err)}
+      res.json(result.rows)
+    })
+    console.log("sent")
+    client.end
+  })
+}
 
-app.post('/api', (request, response) => {
-  const data = request.body
-  const timestamp = Date.now()
-  data.timestamp = timestamp
-  response.json(data)
-})
+execute()
+
+/*app.post('/api', (req, res) => {
+  const dataRqst = req.body
+  res.json(dataRes)
+})*/
