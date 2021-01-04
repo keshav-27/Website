@@ -43,7 +43,7 @@ submit.addEventListener('click', async (e) => {
             locationRqst: [minCoord.value.split(','), maxCoord.value.split(',')]   
         })
     }
-    const response = await fetch('/api', options)
+    const response =  await fetch('/api', options)
     const post = await response.json()
     console.log(post)
     const postArray = Array.from(post)
