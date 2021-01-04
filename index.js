@@ -21,7 +21,9 @@ async function execute() {
   await client.connect()
   await app.post('/api', (req, res) => {
     const dataRqst = req.body
-    client.query("SELECT * FROM data1 WHERE accel_X < $1", [dataRqst.accelRqst[0]] , (err, result) => {
+    const myQuery = "SELECT * FROM data2 WHERE accel_x BETWEEN $1 AND $2 AND accel_y BETWEEN $3 AND $4 AND timestamp BETWEEN $5 AND $6"
+    const parameters = [dataRqst.accelRqst[0], dataRqst.accelRqst[1], dataRqst.speedRqst[0], dataRqst.speedRqst[1], dataRqst.intervalRqst[0], dataRqst.intervalRqst[1]]
+    client.query(myQuery, parameters , (err, result) => {
       if (err) {err => console.log(err)}
       res.json(result.rows)
     })

@@ -47,20 +47,17 @@ submit.addEventListener('click', async (e) => {
     const post = await response.json()
     console.log(post)
     const postArray = Array.from(post)
-    let plotData = []
+    chart.data.labels = []
+    chart.data.datasets[0].data = []
     postArray.forEach(post => {
         chart.data.labels.push(post.accel_x)
-        plotData.push(post.accel_y)
+        chart.data.datasets[0].data.push(post.accel_y)
+        //new mapboxgl.Marker().setLngLat([post.long, post.lat]).setPopup(popUp).addTo(map)
     })
-    chart.data.datasets.data = plotData
     chart.update()
-    console.log(chart.data.datasets.data)
     let minCoords = minCoord.value.split(',')
     let maxCoords = maxCoord.value.split(',')
     let coords = [[parseFloat(minCoords[0]), parseFloat(minCoords[1])], [parseFloat(maxCoords[0]), parseFloat(maxCoords[1])]]
     map.setMaxBounds(coords)
-    new mapboxgl.Marker().setLngLat([80, 15]).setPopup(popUp).addTo(map)
-    minCoord.value = ''
-    maxCoord.value = ''
-    console.log(coords)
+    minCoord.value = ''; maxCoord.value = ''; speedRange.value = ''; accelRange.value = ''; interval.value = '';
 })
