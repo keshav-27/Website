@@ -21,13 +21,20 @@ async function execute() {
   await client.connect()
   await app.post('/api', (req, res) => {
     const dataRqst = req.body
-    const myQuery = "SELECT * FROM data2 WHERE accel_x BETWEEN $1 AND $2 AND accel_y BETWEEN $3 AND $4 AND timestamp BETWEEN $5 AND $6"
-    const parameters = [dataRqst.accelRqst[0], dataRqst.accelRqst[1], dataRqst.speedRqst[0], dataRqst.speedRqst[1], dataRqst.intervalRqst[0], dataRqst.intervalRqst[1]]
+    let myQuery = "SELECT * FROM data2 WHERE accel_x BETWEEN $1 AND $2 AND accel_y BETWEEN $3 AND $4 ORDER BY accel_x"
+    let parameters = [dataRqst.accelRqst[0], dataRqst.accelRqst[1], dataRqst.speedRqst[0], dataRqst.speedRqst[1]]
+
+    if (dataRqst.accelRqst[0] == '') {
+      parameters[0] = -Infinity; parameters[1] = Infinity
+    }
+    if (dataRqst.speedRqst[0] == ''){
+      parameters[2] = -Infinity; parameters[3] = Infinity
+    }
     client.query(myQuery, parameters , (err, result) => {
       if (err) {err => console.log(err)}
       res.json(result.rows)
+      console.log("sent")
     })
-    console.log("sent")
     client.end
   })
 }

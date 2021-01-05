@@ -5,22 +5,18 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia2VzaGF2LTIwMTkiLCJhIjoiY2tqNnZiaHAyMTg4dTJxb
             center: [80, 10],
             maxBounds: [[60, 7], [90, 40]]
         });
-        var popUp = new mapboxgl.Popup().setHTML("<p>VehicleID</p>")
-
+        var popUp = new mapboxgl.Popup().setText("VehicleID")
+        new mapboxgl.Marker({color: 'rgb(255, 99, 132)'}).setLngLat(['80', '15']).setPopup(popUp).addTo(map)
         const ctx = document.getElementById('chart').getContext('2d');
         let chart = new Chart(ctx, {
-        type: 'line',
-
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [],
-                fill: false
-            }]
-        }
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [{x: 10, y: 0}, {x: -1, y: 4}, {x: 2.5, y: -2}]
+                }]}
 });
 
 const submit = document.getElementById('submit')
@@ -47,11 +43,10 @@ submit.addEventListener('click', async (e) => {
     const post = await response.json()
     console.log(post)
     const postArray = Array.from(post)
-    chart.data.labels = []
     chart.data.datasets[0].data = []
     postArray.forEach(post => {
-        chart.data.labels.push(post.accel_x)
-        chart.data.datasets[0].data.push(post.accel_y)
+        chart.data.datasets[0].data.push({x: post.accel_x, y: post.accel_y})
+        //popUp._content.innerText = post.vehicleID
         //new mapboxgl.Marker().setLngLat([post.long, post.lat]).setPopup(popUp).addTo(map)
     })
     chart.update()
